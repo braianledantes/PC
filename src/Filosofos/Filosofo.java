@@ -4,72 +4,41 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 public class Filosofo extends Thread {
-    private Semaphore tenedor1, tenedor2;
+    private Mesa mesa;
     private Random random;
-    boolean tomo1, tomo2;
+    private int pos;
 
-    public Filosofo(String name, Semaphore tenedor1, Semaphore tenedor2) {
+    public Filosofo(String name, int pos, Mesa mesa) {
         super(name);
-        random = new Random(System.currentTimeMillis());
-        this.tenedor1 = tenedor1;
-        this.tenedor2 = tenedor2;
+        this.pos = pos;
+        this.mesa = mesa;
+        this.random = new Random(System.currentTimeMillis());
     }
 
     @Override
     public void run() {
         while (true) {
-            intentarComer();
+            //intentarComer();
             //comer();
+            mesa.comer(this);
             pensar();
-        }
-    }
-
-    public void intentarComer() {
-        tomo1 = tenedor1.tryAcquire();
-        tomo2 = tenedor2.tryAcquire();
-        if (tomo1 && tomo2) {
-            try {
-                System.out.println(getName() + " estoy COMIENDO <----");
-                Thread.sleep(1000 * (1 + random.nextInt(3)));
-                System.out.println(getName() + " DEJÉ DE COMER  ---->");
-                tenedor1.release();
-                tenedor2.release();
-                //Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else {
-            if (tomo1) {
-                tenedor1.release();
-            }
-            if (tomo2) {
-                tenedor2.release();
-            }
-        }
-    }
-
-    public void comer() {
-        try {
-            tenedor1.acquire();
-            tenedor2.acquire();
-            System.out.println(getName() + " estoy COMIENDO <----");
-            Thread.sleep(1000 * (1 + random.nextInt(2)));
-            //Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            System.out.println(getName() + " DEJÉ DE COMER  ---->");
-            tenedor1.release();
-            tenedor2.release();
         }
     }
 
     public void pensar() {
         try {
-            System.out.println(getName() + " estoy pensando !!!!!");
+            System.out.println("\u001B[0m" + getName() + " estoy pensando !!!!!");
             Thread.sleep(1000 * (1 + random.nextInt(3)));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 }
