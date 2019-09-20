@@ -16,13 +16,13 @@ public class Main {
 
 
     public static void main(String[] args) {
-        int cant = 5;
+        int cant = 3;
         String[] color = {ANSI_RED, ANSI_GREEN, ANSI_YELLOW, ANSI_BLUE, ANSI_PURPLE, ANSI_CYAN, ANSI_BLACK, ANSI_WHITE,ANSI_RED, ANSI_GREEN, ANSI_YELLOW, ANSI_BLUE, ANSI_PURPLE, ANSI_CYAN, ANSI_BLACK, ANSI_WHITE};
         Filosofo[] filosofos = new Filosofo[cant];
         Semaphore[] tenedores = new Semaphore[cant];
 
         for (int i = 0; i < cant; i++) {
-            tenedores[i] = new Semaphore(1, true);
+            tenedores[i] = new Semaphore(1, false);
         }
 
         for (int i = 0; i < cant; i++) {

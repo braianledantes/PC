@@ -11,35 +11,31 @@ public class Main {
         //Semaphore sem3 = new Semaphore(0);
 
         Thread p1 = new Thread(() -> {
-            try {
-                    sem_p1_p2.acquire();
+            while (true) {
+                if (sem_p1_p2.tryAcquire()) {
                     System.out.println("soy " + Thread.currentThread().getName());
                     sem_p2_p3.release();
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                }
             }
         }, "P1");
 
         Thread p2 = new Thread(() -> {
-            try {
-                    sem_p2_p3.acquire();
+            while (true) {
+                if (sem_p2_p3.tryAcquire()) {
                     System.out.println("soy " + Thread.currentThread().getName());
                     sem_p3_p1.release();
-                    sem_p2_p3.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                   // sem_p2_p3.release();
+                }
             }
         }, "P2");
 
         Thread p3 = new Thread(() -> {
-            try {
-                    sem_p3_p1.acquire();
+            while (true) {
+                if (sem_p3_p1.tryAcquire()) {
                     System.out.println("soy " + Thread.currentThread().getName());
-                    sem_p3_p1.release();
+                    //sem_p3_p1.release();
                     sem_p1_p2.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                }
             }
         }, "P3");
 
