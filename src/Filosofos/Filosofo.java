@@ -57,10 +57,11 @@ public class Filosofo extends Thread {
             //Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            System.out.println(getName() + " DEJÉ DE COMER  ---->");
+            tenedor1.release();
+            tenedor2.release();
         }
-        System.out.println(getName() + " DEJÉ DE COMER  ---->");
-        tenedor1.release();
-        tenedor2.release();
     }
 
     public void pensar() {
