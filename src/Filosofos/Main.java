@@ -10,6 +10,11 @@ public class Main {
 
         for (int i = 0; i < cant; i++) {
             filosofos[i] = new Filosofo("" + i, i, mesa);
+            try {
+                filosofos[i].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         for (int i = 0; i < cant; i++) {
