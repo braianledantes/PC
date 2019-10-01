@@ -9,15 +9,11 @@ public class Main {
         Mesa mesa = new Mesa(filosofos);
         mesa.setVisible(true);
 
+
        // Mesa mesa = new Mesa(cant);
 
         for (int i = 0; i < cant; i++) {
             filosofos[i] = new Filosofo("F" + i, i, mesa);
-           /* try {
-                filosofos[i].join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
         }
 
        /* for (int i = 0; i < cant; i++) {
