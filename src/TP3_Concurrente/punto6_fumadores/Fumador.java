@@ -14,7 +14,6 @@ public class Fumador implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("llegó fumador "+ id);
         while (true) {
             try {
                 sala.entraafumar(id);

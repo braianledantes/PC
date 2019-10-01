@@ -20,15 +20,16 @@ public class Filosofo extends Thread {
         while (true) {
             //intentarComer();
             //comer();
-            mesa.comer(this);
+            //mesa.comer(this);
+            mesa.comerVisual(this);
             pensar();
         }
     }
 
     public void pensar() {
         try {
-            System.out.println("\u001B[0m" + getName() + " estoy pensando !!!!!");
-            Thread.sleep(1000 * (1 + random.nextInt(3)));
+            //System.out.println("\u001B[0m" + getName() + " estoy pensando !!!!!");
+            Thread.sleep(1000 * (2 + random.nextInt(4)));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

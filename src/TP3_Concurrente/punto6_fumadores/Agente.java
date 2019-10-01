@@ -13,7 +13,6 @@ public class Agente implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("llegó el agente");
         while (true) {
             sala.colocar(r.nextInt(3) + 1);
         }

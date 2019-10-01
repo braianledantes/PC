@@ -13,13 +13,9 @@ public class SalaFumadores {
     private int ingredienteQueFalta;
     private boolean fumando;
 
-    public synchronized void entraafumar(int id) {
+    public synchronized void entraafumar(int id) throws InterruptedException {
         while (id != ingredienteQueFalta) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            wait();
         }
         fumando = true;
     }
