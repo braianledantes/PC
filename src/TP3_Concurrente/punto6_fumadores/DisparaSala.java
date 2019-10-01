@@ -1,4 +1,8 @@
 package TP3_Concurrente.punto6_fumadores;
+/**
+ * @author Braian Ledantes
+ * @legajo FAI-1686
+ */
 
 /**
  * Considere un sistema formado por tres hilos fumadores que se pasan el día
@@ -10,7 +14,7 @@ package TP3_Concurrente.punto6_fumadores;
  * otro de fósforos. Hay también un hilo agente que pone dos de los tres
  * ingredientes encima de una mesa. El agente dispone de unas reservas infinitas
  * de cada uno de lostres ingredientes y escoge de forma aleatoria cuáles son los
- * ingredientes quepondrá encima de la mesa. Cuando los ha puesto, el fumador que
+ * ingredientes que pondrá encima de la mesa. Cuando los ha puesto, el fumador que
  * tiene el otro ingrediente puede armar su cigarrillo y fumar (los otros dos no).
  * Para ello toma los ingredientes, se arma un cigarrillo y se lo fuma.
  * Cuando termina de fumar vuelve a repetirse el ciclo. En resumen, el ciclo
@@ -28,10 +32,10 @@ public class DisparaSala {
         Fumador f3 = new Fumador(3,sala);
         Agente ag = new Agente(sala);
 
-        Thread fumador1 = new Thread(f1);
-        Thread fumador2 = new Thread(f2);
-        Thread fumador3 = new Thread(f3);
-        Thread agente = new Thread(ag);
+        Thread fumador1 = new Thread(f1, "Fumador" + 1);
+        Thread fumador2 = new Thread(f2,"Fumador" + 2);
+        Thread fumador3 = new Thread(f3, "Fumador" + 3);
+        Thread agente = new Thread(ag, "Agente");
 
         fumador1.start();
         fumador2.start();
