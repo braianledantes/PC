@@ -11,6 +11,7 @@ public class SalaFumadores {
      * el agente solo comunica el ingrediente que falta en la mesa.
      */
     private int ingredienteQueFalta;
+    private boolean fumando;
 
     public synchronized void entraafumar(int id) {
         while (id != ingredienteQueFalta) {
@@ -20,25 +21,23 @@ public class SalaFumadores {
                 e.printStackTrace();
             }
         }
+        fumando = true;
     }
 
     /**
      * El agente ingresa dos ingredientes menos el que se envia por parametro
+     *
      * @param i ingrediente que falta
      */
     public synchronized void colocar(int i) {
-        ingredienteQueFalta = i;
-        notifyAll();
-
-        // --------- PREGUNTAR XQ SIN ESTE WAIT EL PROGRAMA NO FUNCIONA CORRECTAMENTE??????????????????????????????????
-        try {
-            wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (!fumando) {
+            ingredienteQueFalta = i;
+            notifyAll();
         }
     }
 
     public synchronized void terminarfumar() {
+        fumando = false;
         notifyAll(); // notifica a todos los hilos que continuen con su ejecucion
     }
 }
