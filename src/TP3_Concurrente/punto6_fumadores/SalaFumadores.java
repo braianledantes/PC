@@ -11,13 +11,19 @@ public class SalaFumadores {
      * el agente solo comunica el ingrediente que falta en la mesa.
      */
     private int ingredienteQueFalta;
-    private boolean fumando;
+    private boolean hayIngrediente = false;
 
     public synchronized void entraafumar(int id) throws InterruptedException {
-        while (id != ingredienteQueFalta) {
+        // solo sale del bucle cuando hayIngrediente == true y
+        // el id del filosofo es el mismo que el ingrediente que falta
+        while (!(hayIngrediente && id == ingredienteQueFalta)) {
             wait();
         }
-        fumando = true;
+    }
+
+    public synchronized void terminarfumar() {
+        hayIngrediente = false;
+        notifyAll();
     }
 
     /**
@@ -26,14 +32,15 @@ public class SalaFumadores {
      * @param i ingrediente que falta
      */
     public synchronized void colocar(int i) {
-        if (!fumando) {
-            ingredienteQueFalta = i;
-            notifyAll();
+        while (hayIngrediente) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-    public synchronized void terminarfumar() {
-        fumando = false;
-        notifyAll(); // notifica a todos los hilos que continuen con su ejecucion
+        ingredienteQueFalta = i;
+        hayIngrediente = true;
+        notifyAll();
     }
 }
