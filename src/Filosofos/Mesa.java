@@ -92,6 +92,7 @@ public class Mesa extends JFrame {
         boolean tomo1 = tenedor1.tryAcquire();
         boolean tomo2 = tenedor2.tryAcquire();
 
+        // si el filosofo tomo uno de los tenedores
         if ((tomo1 && !tomo2) || (!tomo1 && tomo2)) {
             if (tomo1) {
                 labelT1.setText("");
@@ -100,8 +101,9 @@ public class Mesa extends JFrame {
                 labelT2.setText("");
                 labelFilosofo.setText(":/ | ");
             }
+            // espera con el tenedor en la mano
             dormirHilo(2, 4);
-
+            // intenta tomar el que le falta
             if (tomo1) {
                 tomo2 = tenedor2.tryAcquire();
             } else {
@@ -109,12 +111,14 @@ public class Mesa extends JFrame {
             }
         }
 
+        // si el filosofo tomo los dos tenedores puede comer
         if (tomo1 && tomo2) {
             labelT1.setText("");
             labelT2.setText("");
             labelFilosofo.setText(":O ||");
             dormirHilo(3, 5);
         }
+        // luego los libera
         if (tomo1) {
             labelT1.setText("|");
             tenedor1.release();
@@ -123,6 +127,7 @@ public class Mesa extends JFrame {
             labelT2.setText("|");
             tenedor2.release();
         }
+        // y espera tranquilo
         labelFilosofo.setText(":)   ");
     }
 
