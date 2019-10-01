@@ -29,6 +29,8 @@ public class SalaFumadores {
     public synchronized void colocar(int i) {
         ingredienteQueFalta = i;
         notifyAll();
+
+        // --------- PREGUNTAR XQ SIN ESTE WAIT EL PROGRAMA NO FUNCIONA CORRECTAMENTE??????????????????????????????????
         try {
             wait();
         } catch (InterruptedException e) {
