@@ -1,4 +1,4 @@
-package TP3_Concurrente.punto6_fumadores;
+package TP3_Concurrente.punto6_fumadores_lock;
 /**
  * @author Braian Ledantes
  * @legajo FAI-1686

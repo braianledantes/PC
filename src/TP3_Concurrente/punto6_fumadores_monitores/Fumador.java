@@ -1,4 +1,4 @@
-package TP3_Concurrente.punto6_fumadores;
+package TP3_Concurrente.punto6_fumadores_monitores;
 
 public class Fumador implements Runnable{
     /**

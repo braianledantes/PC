@@ -9,6 +9,9 @@ public class Mesa extends JFrame {
     private JButton btnStart, btnStop;
     private JLabel[] labelF;
     private JLabel[] labelT;
+    private JLabel marcaRegistrada;
+    private JMenuBar menuBar;
+    private JMenuItem miAcercade;
 
     private int cant;
     private Filosofo[] filosofos;
@@ -62,6 +65,8 @@ public class Mesa extends JFrame {
 
 
         panelBotones = new JPanel();
+
+        marcaRegistrada = new JLabel("Braian Ledantes");
         btnStart = new JButton("Start");
         btnStop = new JButton("Stop");
 
@@ -73,6 +78,7 @@ public class Mesa extends JFrame {
             }
         });
 
+        //panelBotones.add(marcaRegistrada);
         panelBotones.add(btnStart);
         //panelBotones.add(btnStop);
 

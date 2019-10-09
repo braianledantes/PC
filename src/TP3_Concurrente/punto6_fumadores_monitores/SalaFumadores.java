@@ -1,4 +1,4 @@
-package TP3_Concurrente.punto6_fumadores;
+package TP3_Concurrente.punto6_fumadores_monitores;
 
 /**
  * @author Braian Ledantes
@@ -10,8 +10,8 @@ public class SalaFumadores {
      * consideré que el id del fumador es el ingrediente que tiene y
      * el agente solo comunica el ingrediente que falta en la mesa.
      */
-    private int ingredienteQueFalta;
-    private boolean hayIngrediente = false;
+    protected int ingredienteQueFalta;
+    protected boolean hayIngrediente = false;
 
     public synchronized void entraafumar(int id) throws InterruptedException {
         // solo sale del bucle cuando hayIngrediente == true y

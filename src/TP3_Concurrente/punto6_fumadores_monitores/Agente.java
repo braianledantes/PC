@@ -1,4 +1,4 @@
-package TP3_Concurrente.punto6_fumadores;
+package TP3_Concurrente.punto6_fumadores_monitores;
 
 import java.util.Random;
 
