@@ -8,25 +8,31 @@ public class SaludoMonitoresMejorado extends SaludoMonitores implements Saludo {
         this.lockJefe = new Object();
     }
 
+    public void esperarJefe(String empleado) {
+        entrarSala();
+        notificarAlJefe();
+        saludarAlJefe(empleado);
+    }
+
     private synchronized void entrarSala() {
         cantEmpleadosActual++;
     }
 
-    public void esperarJefe(String empleado) {
-        entrarSala();
+    private void notificarAlJefe() {
         synchronized (lockJefe) {
             lockJefe.notify();
         }
-        synchronized (this) {
-            while (!puedoSaludarAlJefe) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    System.out.println(e.toString());
-                }
+    }
+
+    private synchronized void saludarAlJefe(String empleado) {
+        while (!puedoSaludarAlJefe) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println(e.toString());
             }
-            System.out.println(empleado + "> Buenos dias jefe!");
         }
+        System.out.println(empleado + "> Buenos dias jefe!");
     }
 
     public void saludoJefe() {
@@ -41,9 +47,11 @@ public class SaludoMonitoresMejorado extends SaludoMonitores implements Saludo {
             }
             System.out.println("JEFE> Buenos dias!");
             puedoSaludarAlJefe = true;
-            synchronized (this) {
-                notifyAll();
-            }
+            notificarALosEmpleados();
         }
+    }
+
+    private synchronized void notificarALosEmpleados() {
+        this.notifyAll();
     }
 }
