@@ -23,7 +23,9 @@ public class SaludoLocks implements Saludo {
         lock.lock();
         cantActual++;
         try {
-            if (cantActual == cantEmpleados) saludoJefe.signal();
+            if (cantActual == cantEmpleados) {
+                saludoJefe.signal();
+            }
             saludoEmpleados.await();
             System.out.println(nombreEmpleado + "> Buenos dias jefe!");
         } catch (InterruptedException e) {

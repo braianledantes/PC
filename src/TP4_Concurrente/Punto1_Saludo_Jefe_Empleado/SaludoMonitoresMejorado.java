@@ -2,9 +2,11 @@ package TP4_Concurrente.Punto1_Saludo_Jefe_Empleado;
 
 public class SaludoMonitoresMejorado extends SaludoMonitores implements Saludo {
     private final Object lockJefe;
+    private boolean puedoSaludarAEmpledos;
 
     public SaludoMonitoresMejorado(int cantEmpleados) {
         super(cantEmpleados);
+        this.puedoSaludarAEmpledos = false;
         this.lockJefe = new Object();
     }
 
@@ -16,11 +18,14 @@ public class SaludoMonitoresMejorado extends SaludoMonitores implements Saludo {
 
     private synchronized void entrarSala() {
         cantEmpleadosActual++;
+        puedoSaludarAEmpledos = cantEmpleadosActual == cantEmpleados;
     }
 
     private void notificarAlJefe() {
-        synchronized (lockJefe) {
-            lockJefe.notify();
+        if (puedoSaludarAEmpledos) {
+            synchronized (lockJefe) {
+                lockJefe.notify();
+            }
         }
     }
 
@@ -37,7 +42,7 @@ public class SaludoMonitoresMejorado extends SaludoMonitores implements Saludo {
 
     public void saludoJefe() {
         synchronized (lockJefe) {
-            while (cantEmpleadosActual < cantEmpleados) {
+            while (!puedoSaludarAEmpledos) {
                 System.out.println("(Esperando...)");
                 try {
                     lockJefe.wait();
