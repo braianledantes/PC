@@ -31,8 +31,8 @@ public class Enano extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        mesa.salirDeMesa();
         System.out.println(ColoresString.ANSI_GREEN + nombre + " termino de comer.");
+        mesa.salirDeMesa();
     }
 
     public void trabajar() {
