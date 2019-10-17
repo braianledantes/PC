@@ -22,25 +22,27 @@ public class Coche extends Thread {
         Random r = new Random(System.currentTimeMillis());
         int t = r.nextInt(1000);
         if (lado) { // si pasa por el norte
+            System.out.println("\u001B[31mCoche " + idCoche + " llego por NORTE");
             puente.entrarCochePorNorte(idCoche);
-            System.out.println("Coche " + idCoche + " entrando por NORTE");
+            System.out.println("\u001B[31mCoche " + idCoche + " entrando por NORTE");
             try {
-                Thread.sleep(t);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Coche " + idCoche + " saliendo por NORTE");
-            puente.salirCochePorNorte(idCoche);
+            System.out.println("\u001B[0mCoche " + idCoche + " saliendo del NORTE");
+            puente.salirCocheDelNorte(idCoche);
         } else { // si pasa por el sur
+            System.out.println("\u001B[31mCoche " + idCoche + " llego por SUR");
             puente.entrarCochePorSur(idCoche);
-            System.out.println("Coche " + idCoche + " entrando por SUR");
+            System.out.println("\u001B[31mCoche " + idCoche + " entrando por SUR");
             try {
-                Thread.sleep(t);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Coche " + idCoche + " saliendo por SUR");
-            puente.salirCochePorSur(idCoche);
+            System.out.println("\u001B[0mCoche " + idCoche + " saliendo del SUR");
+            puente.salirCocheDelSur(idCoche);
         }
         lado = !lado;
     }

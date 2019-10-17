@@ -3,53 +3,51 @@ package TP5_Concurrente.punto4_Puente.semaforo;
 import java.util.concurrent.Semaphore;
 
 public class Puente {
-    private Semaphore semaphoreNorte, semaphoreSur;
-    private int cant, ultimo;
+    private Semaphore semaphoreNorte, semaphoreSur, semaphoreCapacidad;
+    private int capacidad, ultimo;
 
-    public Puente(int cant) {
-        this.cant = cant;
+    public Puente(int capacidad) {
+        this.capacidad = capacidad;
         this.ultimo = -1;
-        this.semaphoreNorte = new Semaphore(cant);
-        this.semaphoreSur = new Semaphore(cant);
+        this.semaphoreNorte = new Semaphore(capacidad);
+        this.semaphoreSur = new Semaphore(capacidad);
+        this.semaphoreCapacidad = new Semaphore(capacidad);
     }
 
     public void entrarCochePorNorte(int idcoche) {
-        try {
-            if (semaphoreSur.availablePermits() == cant && semaphoreNorte.availablePermits() == cant) {
-                semaphoreSur.acquire(cant);
-            }
-            semaphoreNorte.acquire();
-          //  if (semaphoreSur.availablePermits() == 0) {
-                ultimo = idcoche;
-           // }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        entrarCoche(semaphoreNorte, semaphoreSur, idcoche);
     }
 
-    public void salirCochePorNorte(int idcoche) {
-        if (ultimo == idcoche) {
-            semaphoreSur.release(cant);
-        }
+    public void salirCocheDelNorte(int idcoche) {
+        salirCoche(semaphoreNorte, semaphoreSur, idcoche);
     }
 
     public void entrarCochePorSur(int idcoche) {
+        entrarCoche(semaphoreSur, semaphoreNorte, idcoche);
+    }
+
+    public void salirCocheDelSur(int idcoche) {
+        salirCoche(semaphoreSur, semaphoreNorte, idcoche);
+    }
+
+    private void entrarCoche(Semaphore entrada, Semaphore salida, int idcoche) {
         try {
-            if (semaphoreSur.availablePermits() == cant && semaphoreNorte.availablePermits() == cant) {
-                semaphoreNorte.acquire(cant);
+            if (entrada.availablePermits() == capacidad && salida.availablePermits() == capacidad) {
+                salida.acquire(capacidad);
             }
-            semaphoreSur.acquire();
-           // if (semaphoreSur.availablePermits() == 0) {
-                ultimo = idcoche;
-           // }
+            entrada.acquire();
+            semaphoreCapacidad.acquire();
+            ultimo = idcoche;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void salirCochePorSur(int idcoche) {
-        if (ultimo == idcoche) {
-            semaphoreNorte.release(cant);
+    private void salirCoche(Semaphore entrada, Semaphore salida, int idcoche) {
+        semaphoreCapacidad.release();
+        if (semaphoreCapacidad.availablePermits() == capacidad) {
+            salida.release(capacidad);
+            entrada.release(capacidad);
         }
     }
 }
