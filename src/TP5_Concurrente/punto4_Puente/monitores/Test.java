@@ -1,6 +1,7 @@
 package TP5_Concurrente.punto4_Puente.monitores;
 
 public class Test {
+    //todo no funciona correctamente
     public static void main(String[] args) {
         int cant = 7;
         Coche[] coches1 = new Coche[cant];
