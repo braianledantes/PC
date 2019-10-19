@@ -22,7 +22,7 @@ public class Coche extends Thread {
         Random r = new Random(System.currentTimeMillis());
         int t = r.nextInt(1000);
         if (direccion.equals(Direccion.NORTE)) { // si pasa por el norte
-            puente.entrarCoche(this);
+            puente.entrarCochePorNorte(this);
             System.out.println("Coche " + idCoche + " entrando por NORTE");
             try {
                 Thread.sleep(t);
@@ -30,10 +30,10 @@ public class Coche extends Thread {
                 e.printStackTrace();
             }
             System.out.println("Coche " + idCoche + " saliendo por NORTE");
-            puente.salirCoche(this);
+            puente.salirCochePorNorte(this);
             direccion = Direccion.SUR;
         } else { // si pasa por el sur
-            puente.entrarCoche(this);
+            puente.entrarCochePorNorte(this);
             System.out.println("Coche " + idCoche + " entrando por SUR");
             try {
                 Thread.sleep(t);
@@ -41,7 +41,7 @@ public class Coche extends Thread {
                 e.printStackTrace();
             }
             System.out.println("Coche " + idCoche + " saliendo por SUR");
-            puente.salirCoche(this);
+            puente.salirCochePorNorte(this);
             direccion = Direccion.NORTE;
         }
 
@@ -61,10 +61,5 @@ public class Coche extends Thread {
 
     public void setIdCoche(int idCoche) {
         this.idCoche = idCoche;
-    }
-
-    @Override
-    public String toString() {
-        return "idCoche = " + idCoche + ", direccion = " + direccion;
     }
 }

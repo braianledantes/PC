@@ -1,10 +1,10 @@
-package TP5_Concurrente.punto4_Puente.semaforo;
+package TP5_Concurrente.punto4_Puente.monitores2;
 
 public class Test {
     public static void main(String[] args) {
-        int cantNorte = 5, cantSur = 3;
-        Coche[] coches1 = new Coche[cantNorte];
-        Coche[] coches2 = new Coche[cantSur];
+        int cant = 7;
+        Coche[] coches1 = new Coche[cant];
+        Coche[] coches2 = new Coche[cant];
         int maxCochesPasando = 5;
         Puente puente = new Puente(maxCochesPasando);
 
@@ -12,15 +12,15 @@ public class Test {
             coches1[i] = new Coche(puente, true, i);
         }
 
-        for (int i = 0; i < coches2.length; i++) {
-            coches2[i] = new Coche(puente, false, i + cantNorte);
+        for (int i = 0; i < coches1.length; i++) {
+            coches2[i] = new Coche(puente, false, i + cant);
         }
 
         for (int i = 0; i < coches1.length; i++) {
             coches1[i].start();
         }
 
-        for (int i = 0; i < coches2.length; i++) {
+        for (int i = 0; i < coches1.length; i++) {
             coches2[i].start();
         }
         try {
@@ -28,7 +28,7 @@ public class Test {
                 coches1[i].join();
             }
 
-            for (int i = 0; i < coches2.length; i++) {
+            for (int i = 0; i < coches1.length; i++) {
                 coches2[i].join();
             }
         } catch (InterruptedException e) {

@@ -1,17 +1,19 @@
 package TP5_Concurrente.punto4_Puente.semaforo;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
 public class Puente {
-    private Semaphore semaphoreNorte, semaphoreSur, semaphoreCapacidad;
-    private int capacidad, ultimo;
+    private Semaphore semaphoreNorte, semaphoreSur, mutex;
+    private int capacidad, cruzando;
 
     public Puente(int capacidad) {
         this.capacidad = capacidad;
-        this.ultimo = -1;
-        this.semaphoreNorte = new Semaphore(capacidad);
-        this.semaphoreSur = new Semaphore(capacidad);
-        this.semaphoreCapacidad = new Semaphore(capacidad);
+        this.semaphoreNorte = new Semaphore(capacidad, true);
+        this.semaphoreSur = new Semaphore(capacidad, true);
+        this.mutex = new Semaphore(1);
+        this.cruzando = 0;
     }
 
     public void entrarCochePorNorte(int idcoche) {
@@ -32,22 +34,31 @@ public class Puente {
 
     private void entrarCoche(Semaphore entrada, Semaphore salida, int idcoche) {
         try {
-            if (entrada.availablePermits() == capacidad && salida.availablePermits() == capacidad) {
+            mutex.acquire();
+            if (cruzando == 0) {
                 salida.acquire(capacidad);
             }
+            mutex.release();
             entrada.acquire();
-            semaphoreCapacidad.acquire();
-            ultimo = idcoche;
+            mutex.acquire();
+            cruzando++;
+            mutex.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     private void salirCoche(Semaphore entrada, Semaphore salida, int idcoche) {
-        semaphoreCapacidad.release();
-        if (semaphoreCapacidad.availablePermits() == capacidad) {
-            salida.release(capacidad);
-            entrada.release(capacidad);
+        try {
+            entrada.release();
+            mutex.acquire();
+            cruzando--;
+            if (cruzando == 0) {
+                salida.release(capacidad);
+            }
+            mutex.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
