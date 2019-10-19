@@ -5,10 +5,11 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        int cant = 4, cantEnanos = 7;
+        int lugares = 4, cantEnanos = 7;
 
         Random random = new Random(System.currentTimeMillis());
-        Mesa mesa = new Mesa(cant);
+        //Mesa mesa = new MesaSemaforo(lugares);
+        Mesa mesa = new MesaMonitor(lugares);
         Blancanieves blancanieves = new Blancanieves(mesa, random);
         Enano[] enanos = new Enano[cantEnanos];
 

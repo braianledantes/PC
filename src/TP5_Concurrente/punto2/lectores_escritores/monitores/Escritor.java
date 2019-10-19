@@ -23,7 +23,6 @@ public class Escritor extends Thread {
                 libro.empezarEscribir();
                 System.out.println(ColoresString.ANSI_BLUE +
                         "Escritor " + idEscritor + " escribiendo " + pag + " paginas");
-                Thread.sleep(40 * pag);
                 libro.escribirPaginas(pag);
                 System.out.println(ColoresString.ANSI_BLUE +
                         "Escritor " + idEscritor + " hay " + libro.getPaginasEscritas() + " pag");

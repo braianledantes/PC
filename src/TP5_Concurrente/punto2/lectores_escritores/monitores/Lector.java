@@ -23,7 +23,6 @@ public class Lector extends Thread {
                 libro.empezarLeer();
                 System.out.println(ColoresString.ANSI_RED +
                         "Lector " + idLector + " leyendo " + pag + " paginas");
-                Thread.sleep(20 * pag);
                 libro.leerPaginas(pag);
                 System.out.println(ColoresString.ANSI_RED +
                         "Lector " + idLector + " hay " + libro.getPaginasEscritas() + " pag");

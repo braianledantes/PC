@@ -26,11 +26,7 @@ public class Enano extends Thread {
     public void comer() {
         mesa.entrarAMesa();
         System.out.println(ColoresString.ANSI_GREEN + nombre + " comiendo");
-        try {
-            Thread.sleep(1000 + random.nextInt(3000));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        mesa.comer();
         System.out.println(ColoresString.ANSI_GREEN + nombre + " termino de comer.");
         mesa.salirDeMesa();
     }

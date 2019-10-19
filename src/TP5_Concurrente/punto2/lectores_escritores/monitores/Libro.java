@@ -19,7 +19,8 @@ public class Libro {
         escribiedo = true;
     }
 
-    public synchronized void escribirPaginas (int paginas) {
+    public synchronized void escribirPaginas (int paginas) throws InterruptedException {
+        Thread.sleep(40 * paginas);
         int pagRestantes = cantPaginas - paginasEscritas;
         paginas = Math.min(paginas, pagRestantes);
         paginasEscritas = paginasEscritas + paginas;
@@ -37,7 +38,8 @@ public class Libro {
         cantLectores++;
     }
 
-    public synchronized void leerPaginas(int paginas) {
+    public synchronized void leerPaginas(int paginas) throws InterruptedException{
+        Thread.sleep(20 * paginas);
         paginas = Math.min(paginas, paginasEscritas);
         paginasEscritas = paginasEscritas - paginas;
     }
