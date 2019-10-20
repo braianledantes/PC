@@ -1,19 +1,17 @@
 package Blancanieves_y_los_siete_enanitos;
 
-import colores.ColoresString;
-
 import java.util.Random;
 
 public class MesaMonitor implements Mesa {
     private int lugares;
-    private int comida;
+    private int platosServidos;
     private int lugaresOcupados;
     private int esperando;
     private Random random;
 
     public MesaMonitor(int lugares) {
         this.lugares = lugares;
-        this.comida = 0;
+        this.platosServidos = 0;
         this.lugaresOcupados = 0;
         this.esperando = 0;
         this.random = new Random();
@@ -22,7 +20,7 @@ public class MesaMonitor implements Mesa {
     @Override
     public synchronized void entrarAMesa() {
        esperando++;
-       while (comida == 0 || lugaresOcupados > lugares) {
+       while (platosServidos == 0 || lugaresOcupados > lugares) {
            try {
                wait();
            } catch (InterruptedException e) {
@@ -37,7 +35,7 @@ public class MesaMonitor implements Mesa {
     public void comer() {
         try {
             Thread.sleep(1000 + random.nextInt(3000));
-            comida--;
+            platosServidos--;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -50,7 +48,7 @@ public class MesaMonitor implements Mesa {
 
     @Override
     public synchronized void servirComida() {
-        comida = Math.min(esperando, 4);
+        platosServidos = Math.min(esperando, 4);
         notifyAll();
     }
 }
