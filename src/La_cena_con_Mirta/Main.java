@@ -1,4 +1,4 @@
-package Mirta;
+package La_cena_con_Mirta;
 
 public class Main {
 

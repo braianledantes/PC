@@ -1,6 +1,4 @@
-package Mirta;
-
-import colores.ColoresString;
+package La_cena_con_Mirta;
 
 public class Mozo extends Thread {
     private Mesa mesa;

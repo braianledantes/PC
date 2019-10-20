@@ -1,4 +1,4 @@
-package Puente.monitores;
+package Puente.monitoresMejorado;
 
 public enum Direccion {
     NORTE,

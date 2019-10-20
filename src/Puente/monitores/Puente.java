@@ -1,52 +1,31 @@
 package Puente.monitores;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
-
 public class Puente {
-    private int capacidad, cantActual;
-    private Queue<Coche> fila;
-    private Direccion direccion;
+    private int capacidad, cruzando;
+    private boolean direccion;
 
     public Puente(int capacidad) {
         this.capacidad = capacidad;
-        this.cantActual = 0;
-        this.fila = new PriorityQueue<>();
-        direccion = Direccion.NINGUNA;
+        this.cruzando = 0;
+        this.direccion = true;
     }
 
-    public synchronized void entrarCochePorNorte(Coche coche) {
-        // si no viene nadie se manda
-        while (direccion == Direccion.NINGUNA || !direccion.equals(coche.getDireccion()) || cantActual == capacidad) {
+    public synchronized void entrarCoche(boolean d) {
+        while (cruzando == capacidad || d != direccion) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        direccion = coche.getDireccion();
-        cantActual++;
-        fila.add(coche);
-
+        cruzando++;
     }
 
-    public synchronized void salirCochePorNorte(Coche coche) {
-        while (coche != fila.element()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public synchronized void salirCoche(boolean d) {
+        cruzando--;
+        if (cruzando == 0) {
+            direccion = !direccion;
         }
-        Coche coche1 = fila.poll();
-        if (coche1 == null) {
-            direccion = Direccion.NINGUNA;
-        }
-    }
-
-    public synchronized void entrarCochePorSur(Coche coche) {
-    }
-
-    public synchronized void salirCochePorSur(Coche coche) {
+        notifyAll();
     }
 }

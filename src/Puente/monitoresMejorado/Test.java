@@ -1,6 +1,7 @@
-package Puente.monitores2;
+package Puente.monitoresMejorado;
 
 public class Test {
+    //todo no funciona correctamente
     public static void main(String[] args) {
         int cant = 7;
         Coche[] coches1 = new Coche[cant];
@@ -9,11 +10,11 @@ public class Test {
         Puente puente = new Puente(maxCochesPasando);
 
         for (int i = 0; i < coches1.length; i++) {
-            coches1[i] = new Coche(puente, true, i);
+            coches1[i] = new Coche(puente, Direccion.NORTE, i);
         }
 
         for (int i = 0; i < coches1.length; i++) {
-            coches2[i] = new Coche(puente, false, i + cant);
+            coches2[i] = new Coche(puente, Direccion.SUR, i + cant);
         }
 
         for (int i = 0; i < coches1.length; i++) {

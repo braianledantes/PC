@@ -9,9 +9,9 @@ public class Coche extends Thread {
      */
     private int idCoche;
     private Puente puente;
-    private Direccion direccion;
+    private boolean direccion;
 
-    public Coche(Puente puente, Direccion direccion, int idCoche) {
+    public Coche(Puente puente, boolean direccion, int idCoche) {
         this.direccion = direccion;
         this.idCoche = idCoche;
         this.puente = puente;
@@ -21,37 +21,42 @@ public class Coche extends Thread {
     public void run() {
         Random r = new Random(System.currentTimeMillis());
         int t = r.nextInt(1000);
-        if (direccion.equals(Direccion.NORTE)) { // si pasa por el norte
-            puente.entrarCochePorNorte(this);
-            System.out.println("Coche " + idCoche + " entrando por NORTE");
+        while (true) {
+            if (direccion) { // si pasa por el norte
+                puente.entrarCoche(direccion);
+                System.out.println("Coche " + idCoche + " entro por NORTE");
+                try {
+                    Thread.sleep(t);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Coche " + idCoche + " saliendo por NORTE");
+                puente.salirCoche(direccion);
+            } else { // si pasa por el sur
+                puente.entrarCoche(direccion);
+                System.out.println("Coche " + idCoche + " entro por SUR");
+                try {
+                    Thread.sleep(t);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Coche " + idCoche + " saliendo por SUR");
+                puente.salirCoche(direccion);
+            }
+            direccion = !direccion;
             try {
-                Thread.sleep(t);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Coche " + idCoche + " saliendo por NORTE");
-            puente.salirCochePorNorte(this);
-            direccion = Direccion.SUR;
-        } else { // si pasa por el sur
-            puente.entrarCochePorNorte(this);
-            System.out.println("Coche " + idCoche + " entrando por SUR");
-            try {
-                Thread.sleep(t);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Coche " + idCoche + " saliendo por SUR");
-            puente.salirCochePorNorte(this);
-            direccion = Direccion.NORTE;
         }
-
     }
 
-    public Direccion getDireccion() {
+    public boolean getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(Direccion direccion) {
+    public void setDireccion(boolean direccion) {
         this.direccion = direccion;
     }
 
@@ -61,5 +66,10 @@ public class Coche extends Thread {
 
     public void setIdCoche(int idCoche) {
         this.idCoche = idCoche;
+    }
+
+    @Override
+    public String toString() {
+        return "idCoche = " + idCoche + ", direccion = " + direccion;
     }
 }
