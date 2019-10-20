@@ -23,7 +23,7 @@ public class Puente {
             try {
                 if (direccion == Direccion.NINGUNA) {
                     direccion = coche.getDireccion();
-                    break;
+                    break; // para que no espere
                 }
                 wait();
             } catch (InterruptedException e) {
@@ -55,20 +55,20 @@ public class Puente {
     private void imprimir(Coche coche, boolean entrando) {
         String color, d;
         if (entrando) {
-            d = "entrando";
+            d = " entrando ";
             if (coche.getDireccion() == Direccion.NORTE) {
                 color = ColoresString.ANSI_BLUE;
             } else {
                 color = ColoresString.ANSI_RED;
             }
         } else {
-            d = "saliendo";
+            d = " saliendo ";
             if (coche.getDireccion() == Direccion.NORTE) {
                 color = ColoresString.ANSI_CYAN;
             } else {
                 color = ColoresString.ANSI_PURPLE;
             }
         }
-        System.out.println(color + "Coche " + coche.getIdCoche() + " " + d + " por " + coche.getDireccion());
+        System.out.println(color + "Coche " + coche.getIdCoche() + d + "por " + coche.getDireccion());
     }
 }
