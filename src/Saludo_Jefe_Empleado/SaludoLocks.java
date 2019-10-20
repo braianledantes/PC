@@ -6,12 +6,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class SaludoLocks implements Saludo {
 
-    Lock lock;
-    Condition saludoJefe, saludoEmpleados;
-    int cantActual, cantEmpleados;
+    private Lock lock;
+    private Condition saludoJefe, saludoEmpleados;
+    private int cantActual, cantEmpleados;
 
     public SaludoLocks(int cantEmpleados) {
-
         cantActual = 0;
         this.cantEmpleados = cantEmpleados;
         lock = new ReentrantLock();
