@@ -10,7 +10,11 @@ public class Reponedor implements Runnable {
     @Override
     public void run() {
         while (true) {
-            almacen.reponerIngredientes();
+            try {
+                almacen.reponerIngredientes();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

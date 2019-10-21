@@ -3,29 +3,37 @@ package fumadores_monitores;
 public class SalaFumadoresMejorado extends SalaFumadores {
     protected Object cerrojoAgente = new Object();
 
+    public SalaFumadoresMejorado() {
+        ingredienteQueFalta = -1;
+    }
+
     public synchronized void entraafumar(int id) throws InterruptedException {
-        while (!(hayIngrediente && id == ingredienteQueFalta)) {
+        while (id != ingredienteQueFalta) {
             wait();
         }
     }
 
-    public void terminarfumar() {
+    public synchronized void terminarfumar() {
+        ingredienteQueFalta = -1;
         synchronized (cerrojoAgente) {
-            hayIngrediente = false;
-            cerrojoAgente.notifyAll();
+            cerrojoAgente.notify();
         }
     }
 
-    public synchronized void colocar(int i) {
-        while (hayIngrediente) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+    public void colocar(int i) {
+        synchronized (cerrojoAgente) {
+            while (ingredienteQueFalta != -1) {
+                try {
+                    cerrojoAgente.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            ingredienteQueFalta = i;
+            hayIngrediente = true;
         }
-        ingredienteQueFalta = i;
-        hayIngrediente = true;
-        notifyAll();
+        synchronized (this){
+            notifyAll();
+        }
     }
 }

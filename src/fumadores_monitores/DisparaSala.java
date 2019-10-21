@@ -26,7 +26,7 @@ package fumadores_monitores;
 public class DisparaSala {
 
     public static void main(String[] args) {
-        SalaFumadores sala = new SalaFumadores();
+        SalaFumadores sala = new SalaFumadoresMejorado();
         Fumador f1 = new Fumador(1,sala);
         Fumador f2 = new Fumador(2,sala);
         Fumador f3 = new Fumador(3,sala);
