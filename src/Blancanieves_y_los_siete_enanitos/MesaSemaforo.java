@@ -20,19 +20,19 @@ public class MesaSemaforo implements Mesa {
         }
     }
 
-    @Override
-    public void comer() {
+    public void entrarAMesa() {
         try {
-            Thread.sleep(1000 + random.nextInt(3000));
+            lugares.acquire();
+            esperandoParaComer.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void entrarAMesa() {
+    @Override
+    public void comer() {
         try {
-            lugares.acquire();
-            esperandoParaComer.acquire();
+            Thread.sleep(1000 + random.nextInt(3000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

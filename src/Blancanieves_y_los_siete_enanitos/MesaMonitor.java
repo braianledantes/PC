@@ -11,7 +11,6 @@ public class MesaMonitor implements Mesa {
     public MesaMonitor(int sillas) {
         this.random = new Random();
         this.sillasDisp = sillas;
-
     }
 
     @Override
@@ -44,17 +43,22 @@ public class MesaMonitor implements Mesa {
     }
 
     @Override
-    public synchronized void salirDeMesa() {
-        sillasDisp++;
+    public synchronized void servirComida() {
+        while (esperandoComer == 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        esperandoComer = 0;
         notifyAll();
     }
 
     @Override
-    public synchronized void servirComida() {
-        if (esperandoComer > 0) {
-            esperandoComer = 0;
-            notifyAll();
-        }
+    public synchronized void salirDeMesa() {
+        sillasDisp++;
+        notifyAll();
     }
 
 }
