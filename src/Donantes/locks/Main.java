@@ -18,7 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
         Sala sala = new Sala(4, 9);
-        Thread[] donantes = new Thread[10];
+        Thread[] donantes = new Thread[20];
 
         for (int i = 0; i < donantes.length; i++) {
             donantes[i] = new Thread(new Donante(i, sala));

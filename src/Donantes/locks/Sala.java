@@ -1,5 +1,6 @@
 package Donantes.locks;
 
+import java.util.Random;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -8,6 +9,7 @@ public class Sala {
     private int camillas, revistas;
     private Lock lock;
     private Condition revista, tv;
+    private Random random;
 
     public Sala(int camillas, int revistas) {
         this.camillas = camillas;
@@ -15,12 +17,13 @@ public class Sala {
         lock=new ReentrantLock(true);
         revista = lock.newCondition();
         tv=lock.newCondition();
+        random = new Random();
     }
 
     public void entrar(int id) throws InterruptedException{
         lock.lock();
         while (camillas == 0){
-            if (revistas >= 0){
+            if (revistas > 0){
                 System.out.println("Donante " + id + " tomo una revista");
                 revistas--;
                 revista.await();
@@ -37,7 +40,7 @@ public class Sala {
 
     public void donar(int id) throws InterruptedException {
         System.out.println("Donante " + id + " donando sangre");
-        Thread.sleep(10000);
+        Thread.sleep(3000 + random.nextInt(7000));  // entre 3 y 10 segundos
     }
 
     public void salir(int id) throws InterruptedException {
