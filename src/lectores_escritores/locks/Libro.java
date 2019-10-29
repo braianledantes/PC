@@ -24,7 +24,6 @@ public class Libro {
 
     public void terminarEscribir() {
         rwl.writeLock().unlock();
-
     }
 
 }
