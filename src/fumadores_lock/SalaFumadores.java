@@ -11,24 +11,24 @@ import java.util.concurrent.locks.ReentrantLock;
 public class SalaFumadores {
     private int mesa;
     private boolean alguienFuma;
-    private Lock l;
+    private Lock lock;
     private Condition[] puedoFumar;
     private Condition puedoColocar;
 
     public SalaFumadores() {
-        l = new ReentrantLock(true);
+        lock = new ReentrantLock(true);
         puedoFumar = new Condition[3];
-        puedoFumar[0] = l.newCondition();
-        puedoFumar[1] = l.newCondition();
-        puedoFumar[2] = l.newCondition();
-        puedoColocar = l.newCondition();
+        puedoFumar[0] = lock.newCondition();
+        puedoFumar[1] = lock.newCondition();
+        puedoFumar[2] = lock.newCondition();
+        puedoColocar = lock.newCondition();
         mesa = 0;
         alguienFuma = false;
     }
 
     public void entraafumar(int id) {
+        lock.lock();
         try {
-            l.lock();
             while (mesa != id || alguienFuma) {
                 puedoFumar[id - 1].await();
             }
@@ -37,20 +37,20 @@ public class SalaFumadores {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            l.unlock();
+            lock.unlock();
         }
     }
 
     public void terminarfumar(int id) {
-        l.lock();
+        lock.lock();
         alguienFuma = false;
         puedoColocar.signal();
-        l.unlock();
+        lock.unlock();
     }
 
 
     public void colocar(int ingrediente) {
-        l.lock();
+        lock.lock();
         try {
             while (mesa != 0 || alguienFuma) {
                 puedoColocar.await();
@@ -60,7 +60,7 @@ public class SalaFumadores {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            l.unlock();
+            lock.unlock();
         }
     }
 }

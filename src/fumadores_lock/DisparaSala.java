@@ -4,6 +4,11 @@ package fumadores_lock;
  * @legajo FAI-1686
  */
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Considere un sistema formado por tres hilos fumadores que se pasan el día
  * armando cigarrillos y fumando. Para armar y fumar un cigarrillo necesitan tres
