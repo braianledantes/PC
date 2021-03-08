@@ -1,10 +1,8 @@
 package Barbero_dormilon;
 
-import colores.ColoresString;
-
 public class Cliente implements Runnable {
-    private Barberia barberia;
-    private int id;
+    private final Barberia barberia;
+    private final int id;
 
     public Cliente(Barberia barberia, int i) {
         this.barberia = barberia;

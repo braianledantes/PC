@@ -137,7 +137,7 @@ public class Mesa extends JFrame {
 
     private void dormirHilo(int min, int max) {
         try {
-            Thread.sleep(1000 * (min + random.nextInt(max - min)));
+            Thread.sleep(1000L * (min + random.nextInt(max - min)));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -157,7 +157,7 @@ public class Mesa extends JFrame {
         if (tomo1 && tomo2) {
             try {
                 System.out.println("\u001B[31m" + filosofo.getName() + " estoy COMIENDO <----");
-                Thread.sleep(1000 * (1 + random.nextInt(3)));
+                Thread.sleep(1000L * (1 + random.nextInt(3)));
                 System.out.println("\u001B[0m" + filosofo.getName() + " DEJÉ DE COMER  ---->");
                 tenedor1.release();
                 tenedor2.release();
