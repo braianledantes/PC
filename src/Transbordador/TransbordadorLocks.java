@@ -6,9 +6,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class TransbordadorLocks implements Transbordador {
     private final Lock lock = new ReentrantLock();
-    private final Condition cSubir = lock.newCondition();
-    private final Condition cBajar = lock.newCondition();
-    private final Condition cViajar = lock.newCondition();
+    private final Condition esperandoSubir = lock.newCondition();
+    private final Condition esperandoBajar = lock.newCondition();
+    private final Condition esperandoViajar = lock.newCondition();
 
     private boolean subir = true;
     private boolean bajar = false;
@@ -19,11 +19,11 @@ public class TransbordadorLocks implements Transbordador {
         lock.lock();
         try {
             while (!subir || cantCoches >= 10) {
-                cSubir.await();
+                esperandoSubir.await();
             }
             this.cantCoches++;
             System.out.println(Thread.currentThread().getName() + " subio al transbordador");
-            cViajar.signal();
+            esperandoViajar.signal();
         } catch (InterruptedException ignore) {
         } finally {
             lock.unlock();
@@ -36,7 +36,7 @@ public class TransbordadorLocks implements Transbordador {
         try {
             System.out.println(Thread.currentThread().getName() + " esperando coches");
             while (cantCoches < 10) {
-                cViajar.await();
+                esperandoViajar.await();
             }
 
             System.out.println(Thread.currentThread().getName() + " yendo...");
@@ -45,7 +45,7 @@ public class TransbordadorLocks implements Transbordador {
 
             subir = false;
             bajar = true;
-            cBajar.signalAll();
+            esperandoBajar.signalAll();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -58,11 +58,11 @@ public class TransbordadorLocks implements Transbordador {
         lock.lock();
         try {
             while (!bajar) {
-                cBajar.await();
+                esperandoBajar.await();
             }
             cantCoches--;
             System.out.println(Thread.currentThread().getName() + " bajo del transbordador");
-            cViajar.signal();
+            esperandoViajar.signal();
         } catch (InterruptedException ignore) {
         } finally {
             lock.unlock();
@@ -74,7 +74,7 @@ public class TransbordadorLocks implements Transbordador {
         lock.lock();
         try {
             while (cantCoches > 0) {
-                cViajar.await();
+                esperandoViajar.await();
             }
             System.out.println(Thread.currentThread().getName() + " volviendo...");
             Thread.sleep(5000);
@@ -82,7 +82,7 @@ public class TransbordadorLocks implements Transbordador {
 
             bajar = false;
             subir = true;
-            cSubir.signalAll();
+            esperandoSubir.signalAll();
         } catch (InterruptedException ignore) {
         } finally {
             lock.unlock();
