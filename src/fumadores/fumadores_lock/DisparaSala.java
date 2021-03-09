@@ -1,13 +1,8 @@
-package fumadores_lock;
+package fumadores.fumadores_lock;
 /**
  * @author Braian Ledantes
  * @legajo FAI-1686
  */
-
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Considere un sistema formado por tres hilos fumadores que se pasan el día

@@ -1,4 +1,4 @@
-package fumadores_monitores;
+package fumadores.fumadores_monitores;
 /**
  * @author Braian Ledantes
  * @legajo FAI-1686

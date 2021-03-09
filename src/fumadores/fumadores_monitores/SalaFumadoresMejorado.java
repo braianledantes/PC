@@ -1,4 +1,4 @@
-package fumadores_monitores;
+package fumadores.fumadores_monitores;
 
 public class SalaFumadoresMejorado extends SalaFumadores {
     protected Object cerrojoAgente = new Object();

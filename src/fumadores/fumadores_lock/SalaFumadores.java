@@ -1,4 +1,4 @@
-package fumadores_lock;
+package fumadores.fumadores_lock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

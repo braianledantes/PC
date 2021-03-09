@@ -1,4 +1,4 @@
-package fumadores_monitores;
+package fumadores.fumadores_lock;
 
 import java.util.Random;
 

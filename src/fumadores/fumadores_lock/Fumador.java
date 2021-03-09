@@ -1,4 +1,4 @@
-package fumadores_monitores;
+package fumadores.fumadores_lock;
 
 public class Fumador implements Runnable{
     /**
@@ -19,7 +19,7 @@ public class Fumador implements Runnable{
                 sala.entraafumar(id);
                 System.out.println("Fumador " + id + " está fumando.");
                 Thread.sleep(1000);
-                sala.terminarfumar();
+                sala.terminarfumar(id);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

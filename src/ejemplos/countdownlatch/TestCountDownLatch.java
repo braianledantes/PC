@@ -13,8 +13,6 @@ package ejemplos.countdownlatch;
  * @author Sebastian Santalla
  */
 
-import ejemplos.countdownlatch.Servicio;
-
 import java.util.concurrent.CountDownLatch;
 
 public class TestCountDownLatch {
