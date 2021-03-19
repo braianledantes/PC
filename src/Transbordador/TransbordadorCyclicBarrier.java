@@ -1,30 +1,33 @@
 package Transbordador;
 
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 
 public class TransbordadorCyclicBarrier implements Transbordador {
-    CyclicBarrier ir = new CyclicBarrier(10);
-    CyclicBarrier volver = new CyclicBarrier(10);
-    CountDownLatch subir = new CountDownLatch(10);
+    CountDownLatch ir = new CountDownLatch(10);
+    CountDownLatch volver = new CountDownLatch(10);
+    CyclicBarrier subir = new CyclicBarrier(1);
+    CyclicBarrier bajar = new CyclicBarrier(1);
 
     @Override
     public void subir() {
-        // TODO
+        try {
+            subir.await();
+            ir.countDown();
+        } catch (InterruptedException | BrokenBarrierException ignore) {
+        }
     }
 
     @Override
     public void ir() {
-        // TODO
     }
 
     @Override
     public void bajar() {
-        // TODO
     }
 
     @Override
     public void volver() {
-        // TODO
     }
 }

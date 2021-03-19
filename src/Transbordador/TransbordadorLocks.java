@@ -13,12 +13,13 @@ public class TransbordadorLocks implements Transbordador {
     private boolean subir = true;
     private boolean bajar = false;
     private int cantCoches = 0;
+    private final int canMaxima = 3;
 
     @Override
     public void subir() {
         lock.lock();
         try {
-            while (!subir || cantCoches >= 10) {
+            while (!subir || cantCoches >= canMaxima) {
                 esperandoSubir.await();
             }
             this.cantCoches++;
@@ -35,7 +36,7 @@ public class TransbordadorLocks implements Transbordador {
         lock.lock();
         try {
             System.out.println(Thread.currentThread().getName() + " esperando coches");
-            while (cantCoches < 10) {
+            while (cantCoches < canMaxima) {
                 esperandoViajar.await();
             }
 

@@ -6,8 +6,8 @@ public class Ejercicio1 {
         String[] nombresEmpleados = {"Nadina", "Juampi", "Agustin", "Valeria", "Silvia"};
         //Saludo hola = new Saludo(5);
         //Saludo hola = new SaludoLocks(5);
-       // Saludo hola = new SaludoMonitores(5);
-        Saludo hola = new SaludoMonitoresMejorado(5);
+        Saludo hola = new SaludoMonitores(5);
+        //Saludo hola = new SaludoExchange(nombresEmpleados.length);
         Personal[] elPersonal = new Personal[6];
         elPersonal[0] = new Personal(hola, "JEFE", true);
 

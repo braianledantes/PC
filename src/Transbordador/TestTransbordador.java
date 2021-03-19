@@ -19,6 +19,7 @@ public class TestTransbordador {
     public static void main(String[] args) {
         Transbordador transbordador = new TransbordadorCountDownLatch();
         Manejador manejador = new Manejador("manejador" , transbordador);
+        manejador.setPriority(Thread.MAX_PRIORITY);
 
         Thread[] hilos = new Thread[10];
         for (int i = 0; i < hilos.length; i++) {

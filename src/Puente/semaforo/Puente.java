@@ -3,8 +3,11 @@ package Puente.semaforo;
 import java.util.concurrent.Semaphore;
 
 public class Puente {
-    private Semaphore semaphoreNorte, semaphoreSur, mutex;
-    private int capacidad, cruzando;
+    private final Semaphore semaphoreNorte;
+    private final Semaphore semaphoreSur;
+    private final Semaphore mutex;
+    private final int capacidad;
+    private int cruzando;
 
     public Puente(int capacidad) {
         this.capacidad = capacidad;
@@ -14,23 +17,23 @@ public class Puente {
         this.cruzando = 0;
     }
 
-    public void entrarCochePorNorte(int idcoche) {
-        entrarCoche(semaphoreNorte, semaphoreSur, idcoche);
+    public void entrarCochePorNorte() {
+        entrarCoche(semaphoreNorte, semaphoreSur);
     }
 
-    public void salirCocheDelNorte(int idcoche) {
-        salirCoche(semaphoreNorte, semaphoreSur, idcoche);
+    public void salirCocheDelNorte() {
+        salirCoche(semaphoreNorte, semaphoreSur);
     }
 
-    public void entrarCochePorSur(int idcoche) {
-        entrarCoche(semaphoreSur, semaphoreNorte, idcoche);
+    public void entrarCochePorSur() {
+        entrarCoche(semaphoreSur, semaphoreNorte);
     }
 
-    public void salirCocheDelSur(int idcoche) {
-        salirCoche(semaphoreSur, semaphoreNorte, idcoche);
+    public void salirCocheDelSur() {
+        salirCoche(semaphoreSur, semaphoreNorte);
     }
 
-    private void entrarCoche(Semaphore entrada, Semaphore salida, int idcoche) {
+    private void entrarCoche(Semaphore entrada, Semaphore salida) {
         try {
             mutex.acquire();
             if (cruzando == 0) {
@@ -46,7 +49,7 @@ public class Puente {
         }
     }
 
-    private void salirCoche(Semaphore entrada, Semaphore salida, int idcoche) {
+    private void salirCoche(Semaphore entrada, Semaphore salida) {
         try {
             entrada.release();
             mutex.acquire();

@@ -1,7 +1,6 @@
 package Transbordador;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TransbordadorCountDownLatch implements Transbordador {
     private final CountDownLatch ir = new CountDownLatch(10);

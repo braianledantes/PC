@@ -28,7 +28,7 @@ public class Coche extends Thread {
         while (true) {
             t = r.nextInt(1000);
             if (lado) { // si pasa por el norte
-                puente.entrarCochePorNorte(idCoche);
+                puente.entrarCochePorNorte();
                 System.out.println(ColoresString.ANSI_BLUE + "Coche " + idCocheString + " entro por NORTE       <---");
                 try {
                     Thread.sleep(1000);
@@ -36,9 +36,9 @@ public class Coche extends Thread {
                     e.printStackTrace();
                 }
                 System.out.println(ColoresString.ANSI_BLUE + "Coche " + idCocheString + " salio del NORTE       --->");
-                puente.salirCocheDelNorte(idCoche);
+                puente.salirCocheDelNorte();
             } else { // si pasa por el sur
-                puente.entrarCochePorSur(idCoche);
+                puente.entrarCochePorSur();
                 System.out.println(ColoresString.ANSI_GREEN + "Coche " + idCocheString + " entro por SUR         <---");
                 try {
                     Thread.sleep(1000);
@@ -46,7 +46,7 @@ public class Coche extends Thread {
                     e.printStackTrace();
                 }
                 System.out.println(ColoresString.ANSI_GREEN + "Coche " + idCocheString + " salio del SUR         --->");
-                puente.salirCocheDelSur(idCoche);
+                puente.salirCocheDelSur();
             }
             try {
                 Thread.sleep(2000);
